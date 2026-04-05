@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>이지호 — 신라대학교 교육학과</title>
+  <meta name="description" content="신라대학교 교육학과 202522020 이지호" />
+
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Noto+Serif+KR:wght@400;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --text-xs:   clamp(0.75rem,  0.7rem  + 0.25vw, 0.875rem);
+      --text-sm:   clamp(0.875rem, 0.8rem  + 0.35vw, 1rem);
+      --text-base: clamp(1rem,     0.95rem + 0.25vw, 1.125rem);
+      --text-3xl:  clamp(2.5rem,   1rem    + 4vw,    5rem);
+
+      --space-1: 0.25rem;  --space-2: 0.5rem;   --space-3: 0.75rem;
+      --space-4: 1rem;     --space-6: 1.5rem;
+      --space-8: 2rem;     --space-12: 3rem;     --space-16: 4rem;
+
+      --color-bg:           #f7faf8;
+      --color-surface:      #ffffff;
+      --color-text:         #000000;
+      --color-text-muted:   #4a5e53;
+      --color-text-faint:   #8aaa96;
+      --color-primary:      #285A48;
+      --color-primary-tint: #d8f2e6;
+      --color-primary-light:#B0E4CC;
+      --color-divider:      oklch(from #000000 l c h / 0.08);
+      --color-border:       oklch(from #000000 l c h / 0.07);
+
+      --radius-sm:   0.375rem;
+      --radius-md:   0.5rem;
+      --radius-lg:   0.75rem;
+      --radius-full: 9999px;
+
+      --transition: 180ms cubic-bezier(0.16, 1, 0.3, 1);
+      --shadow-md:  0 4px 14px oklch(0.2 0.05 150 / 0.09);
+
+      --font-display: 'Noto Serif KR', Georgia, serif;
+      --font-body:    'Noto Sans KR', 'Apple SD Gothic Neo', sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html {
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+    }
+    body {
+      min-height: 100dvh;
+      font-family: var(--font-body);
+      font-size: var(--text-base);
+      color: var(--color-text);
+      background: var(--color-bg);
+      display: flex;
+      flex-direction: column;
+    }
+    a { transition: color var(--transition), opacity var(--transition); }
+    ::selection { background: #B0E4CC55; color: var(--color-text); }
+    :focus-visible { outline: 2px solid var(--color-primary); outline-offset: 3px; border-radius: var(--radius-sm); }
+
+    main {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: clamp(var(--space-8), 8vw, var(--space-16));
+    }
+
+    .card {
+      width: 100%;
+      max-width: 480px;
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-md);
+      padding: clamp(var(--space-8), 6vw, var(--space-12));
+      opacity: 0;
+      transform: translateY(16px);
+      animation: appear 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards;
+    }
+
+    @keyframes appear {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .name {
+      font-family: var(--font-display);
+      font-size: var(--text-3xl);
+      font-weight: 700;
+      letter-spacing: -0.025em;
+      line-height: 1;
+      color: var(--color-text);
+      margin-bottom: var(--space-3);
+    }
+    .name em {
+      font-style: normal;
+      color: var(--color-primary);
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-2);
+      margin-bottom: var(--space-8);
+    }
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-1);
+      padding: 3px var(--space-3);
+      border-radius: var(--radius-full);
+      font-size: var(--text-xs);
+      font-weight: 500;
+      background: var(--color-primary-tint);
+      color: var(--color-primary);
+      border: 1px solid var(--color-primary-light);
+      letter-spacing: 0.01em;
+    }
+
+    .divider {
+      height: 1px;
+      background: var(--color-divider);
+      margin-bottom: var(--space-6);
+    }
+
+    .contact-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2);
+    }
+    .contact-list a {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      font-size: var(--text-sm);
+      color: var(--color-text-muted);
+      text-decoration: none;
+      padding: var(--space-2) 0;
+    }
+    .contact-list a:hover { color: var(--color-primary); }
+    .contact-list a svg { flex-shrink: 0; color: var(--color-text-faint); }
+    .contact-list a:hover svg { color: var(--color-primary); }
+
+    footer {
+      padding: var(--space-6);
+      text-align: center;
+    }
+    footer p {
+      font-size: var(--text-xs);
+      color: var(--color-text-faint);
+    }
+  </style>
+</head>
+<body>
+
+  <main>
+    <div class="card">
+
+      <h1 class="name">이지호</h1>
+
+      <div class="tags">
+        <span class="tag">신라대학교 교육학과</span>
+        <span class="tag">202522020</span>
+      </div>
+
+      <div class="divider"></div>
+
+      <ul class="contact-list">
+        <li>
+          <a href="mailto:admin@wfix.kr">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            admin@wfix.kr
+          </a>
+        </li>
+        <li>
+          <a href="mailto:s-202522020@sillain.ac.kr">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+            s-202522020@sillain.ac.kr
+          </a>
+        </li>
+      </ul>
+
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 이지호</p>
+  </footer>
+
+</body>
+</html>
