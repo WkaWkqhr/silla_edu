@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>「이 세계 약국」 감상문 피드백 종합 리포트</title>
+    <style>
+        :root {
+            --bg-primary: #0f0f0f;
+            --bg-secondary: #1a1a1a;
+            --bg-card: #1f1f1f;
+            --bg-card-hover: #262626;
+            --text-primary: #e0e0e0;
+            --text-secondary: #b0b0b0;
+            --text-muted: #808080;
+            --accent-red: #e74c3c;
+            --accent-red-glow: rgba(231, 76, 60, 0.3);
+            --accent-orange: #f39c12;
+            --accent-blue: #3498db;
+            --accent-green: #2ecc71;
+            --border-color: #2a2a2a;
+            --border-accent: #3a3a3a;
+            --shadow-lg: 0 20px 60px rgba(0, 0, 0, 0.5);
+            --shadow-md: 0 8px 30px rgba(0, 0, 0, 0.4);
+            --radius-lg: 20px;
+            --radius-md: 14px;
+            --radius-sm: 10px;
+            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Pretendard', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Segoe UI', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.75;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            min-height: 100vh;
+        }
+
+        /* 배경 패턴 */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background:
+                radial-gradient(ellipse at 20% 20%, rgba(231, 76, 60, 0.04) 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 60%, rgba(243, 156, 18, 0.03) 0%, transparent 60%),
+                radial-gradient(ellipse at 50% 90%, rgba(52, 152, 219, 0.03) 0%, transparent 60%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 24px 80px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* 헤더 */
+        .report-header {
+            text-align: center;
+            padding: 50px 30px 40px;
+            margin-bottom: 40px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .report-header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 10%;
+            width: 80%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent-red), var(--accent-orange), var(--accent-red), transparent);
+            opacity: 0.6;
+        }
+
+        .report-badge {
+            display: inline-block;
+            background: rgba(231, 76, 60, 0.15);
+            color: var(--accent-red);
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            padding: 6px 18px;
+            border-radius: 30px;
+            margin-bottom: 18px;
+            border: 1px solid rgba(231, 76, 60, 0.25);
+            text-transform: uppercase;
+        }
+
+        .report-header h1 {
+            font-size: 2rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            color: #ffffff;
+            margin-bottom: 8px;
+        }
+
+        .report-header .subtitle {
+            font-size: 1rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .report-header .meta-info {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .report-header .meta-info span {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .report-header .meta-info .dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--accent-red);
+            display: inline-block;
+        }
+
+        /* 종합 점수 카드 */
+        .verdict-card {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            background: var(--bg-secondary);
+            border: 2px solid var(--accent-red);
+            border-radius: var(--radius-lg);
+            padding: 30px 40px;
+            margin-bottom: 40px;
+            box-shadow: 0 0 60px var(--accent-red-glow), var(--shadow-md);
+            position: relative;
+        }
+
+        .verdict-card .grade-circle {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #c0392b, #e74c3c);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            font-weight: 900;
+            color: #fff;
+            box-shadow: 0 10px 40px rgba(231, 76, 60, 0.5);
+            flex-shrink: 0;
+            letter-spacing: -0.02em;
+        }
+
+        .verdict-card .verdict-text h3 {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--accent-red);
+            margin-bottom: 4px;
+        }
+
+        .verdict-card .verdict-text p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            margin: 0;
+        }
+
+        .verdict-card .verdict-text .score-detail {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        /* 섹션 타이틀 */
+        .section-title {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: #ffffff;
+            margin: 48px 0 20px;
+            padding-left: 16px;
+            border-left: 4px solid var(--accent-red);
+            letter-spacing: -0.01em;
+        }
+
+        .section-title:first-of-type {
+            margin-top: 0;
+        }
+
+        /* 평가 카드 */
+        .evaluation-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 36px 32px;
+            margin-bottom: 32px;
+            box-shadow: var(--shadow-md);
+            transition: all var(--transition);
+            position: relative;
+        }
+
+        .evaluation-card:hover {
+            border-color: var(--border-accent);
+            box-shadow: var(--shadow-lg);
+            background: var(--bg-card-hover);
+        }
+
+        .evaluation-card .eval-number {
+            position: absolute;
+            top: -16px;
+            left: 28px;
+            background: var(--accent-red);
+            color: #fff;
+            font-weight: 800;
+            font-size: 0.8rem;
+            padding: 5px 16px;
+            border-radius: 20px;
+            letter-spacing: 0.05em;
+        }
+
+        .evaluation-card .eval-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .evaluation-card .eval-header .eval-grade {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: var(--accent-red);
+            line-height: 1;
+        }
+
+        .evaluation-card .eval-header .eval-score {
+            font-size: 1rem;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .evaluation-card .eval-header .eval-label {
+            font-size: 0.75rem;
+            background: rgba(231, 76, 60, 0.15);
+            color: var(--accent-red);
+            padding: 3px 12px;
+            border-radius: 4px;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+        }
+
+        /* 근거 박스 */
+        .rationale-box {
+            background: rgba(231, 76, 60, 0.06);
+            border-left: 3px solid var(--accent-red);
+            padding: 16px 20px;
+            border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+            margin-bottom: 24px;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .rationale-box strong {
+            color: var(--accent-red);
+        }
+
+        /* 피드백 항목 */
+        .feedback-item {
+            margin-bottom: 24px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .feedback-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .feedback-item .fb-title {
+            font-weight: 800;
+            font-size: 1.05rem;
+            color: #ffffff;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .feedback-item .fb-title .icon {
+            font-size: 1.2rem;
+        }
+
+        .feedback-item .fb-content {
+            color: var(--text-secondary);
+            font-size: 0.92rem;
+            padding-left: 28px;
+        }
+
+        .feedback-item .fb-content ul {
+            list-style: none;
+            padding: 0;
+            margin: 8px 0 0;
+        }
+
+        .feedback-item .fb-content ul li {
+            padding: 5px 0;
+            padding-left: 18px;
+            position: relative;
+        }
+
+        .feedback-item .fb-content ul li::before {
+            content: '▸';
+            position: absolute;
+            left: 0;
+            color: var(--accent-red);
+            font-size: 0.7rem;
+            top: 7px;
+        }
+
+        /* 조언 박스 */
+        .advice-box {
+            background: rgba(52, 152, 219, 0.06);
+            border: 1px solid rgba(52, 152, 219, 0.2);
+            border-radius: var(--radius-md);
+            padding: 20px 24px;
+            margin-top: 16px;
+        }
+
+        .advice-box .advice-label {
+            font-weight: 800;
+            font-size: 0.85rem;
+            color: var(--accent-blue);
+            letter-spacing: 0.05em;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .advice-box p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin: 0;
+        }
+
+        /* 인용 블록 */
+        .quote-block {
+            background: var(--bg-secondary);
+            border-radius: var(--radius-sm);
+            padding: 14px 20px;
+            margin: 12px 0;
+            font-style: italic;
+            color: var(--text-muted);
+            font-size: 0.88rem;
+            border: 1px solid var(--border-color);
+            position: relative;
+        }
+
+        .quote-block::before {
+            content: '“';
+            position: absolute;
+            top: -10px;
+            left: 12px;
+            font-size: 2.5rem;
+            color: var(--accent-red);
+            opacity: 0.4;
+            font-style: normal;
+            line-height: 1;
+        }
+
+        /* 종합 소견 */
+        .final-verdict {
+            background: linear-gradient(135deg, rgba(231, 76, 60, 0.08), rgba(243, 156, 18, 0.05));
+            border: 1px solid rgba(231, 76, 60, 0.3);
+            border-radius: var(--radius-lg);
+            padding: 28px 32px;
+            margin-top: 20px;
+        }
+
+        .final-verdict h4 {
+            color: var(--accent-red);
+            font-weight: 800;
+            font-size: 1rem;
+            margin-bottom: 10px;
+            letter-spacing: 0.03em;
+        }
+
+        .final-verdict p {
+            color: var(--text-primary);
+            font-size: 0.95rem;
+            line-height: 1.8;
+        }
+
+        /* 비교 테이블 */
+        .compare-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 0.88rem;
+            border-radius: var(--radius-md);
+            overflow: hidden;
+        }
+
+        .compare-table th,
+        .compare-table td {
+            padding: 12px 16px;
+            text-align: left;
+            border: 1px solid var(--border-color);
+        }
+
+        .compare-table th {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            font-weight: 700;
+            font-size: 0.8rem;
+            letter-spacing: 0.03em;
+            text-transform: uppercase;
+        }
+
+        .compare-table td {
+            color: var(--text-secondary);
+            background: var(--bg-card);
+        }
+
+        .compare-table .highlight-row td {
+            background: rgba(231, 76, 60, 0.05);
+        }
+
+        /* 푸터 */
+        .report-footer {
+            text-align: center;
+            padding: 30px;
+            margin-top: 50px;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        /* 반응형 */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px 14px 50px;
+            }
+
+            .report-header {
+                padding: 30px 18px 26px;
+            }
+
+            .report-header h1 {
+                font-size: 1.4rem;
+            }
+
+            .verdict-card {
+                flex-direction: column;
+                text-align: center;
+                padding: 24px 20px;
+                gap: 16px;
+            }
+
+            .verdict-card .grade-circle {
+                width: 72px;
+                height: 72px;
+                font-size: 2.2rem;
+            }
+
+            .evaluation-card {
+                padding: 24px 16px;
+            }
+
+            .evaluation-card .eval-number {
+                left: 14px;
+                font-size: 0.7rem;
+                padding: 4px 12px;
+                top: -12px;
+            }
+
+            .evaluation-card .eval-header .eval-grade {
+                font-size: 1.8rem;
+            }
+
+            .compare-table {
+                font-size: 0.75rem;
+            }
+
+            .compare-table th,
+            .compare-table td {
+                padding: 8px 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .report-header h1 {
+                font-size: 1.2rem;
+            }
+
+            .verdict-card .grade-circle {
+                width: 60px;
+                height: 60px;
+                font-size: 1.8rem;
+            }
+
+            .evaluation-card .eval-header {
+                gap: 8px;
+            }
+
+            .feedback-item .fb-content {
+                padding-left: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <!-- 헤더 -->
+        <header class="report-header">
+            <div class="report-badge">📋 종합 평가 리포트</div>
+            <h1>「이 세계 약국」 감상문 피드백</h1>
+            <p class="subtitle">문학적 · 구성적 측면 평가 — 대학교 2학년 과제 기준</p>
+            <div class="meta-info">
+                <span><span class="dot"></span> 평가자: 문학·구성 담당</span>
+                <span><span class="dot"></span> 대상: 시리즈 미디어 감상문</span>
+                <span><span class="dot"></span> 평가 일자: 2025년 8월</span>
+            </div>
+        </header>
+
+        <!-- 종합 평결 카드 -->
+        <div class="verdict-card">
+            <div class="grade-circle">F</div>
+            <div class="verdict-text">
+                <h3>종합 평결: 낙제 (Fail)</h3>
+                <p>두 평가 모두 <strong>F 학점</strong>을 부여하였으며, 감상문으로서의 기본 형식과 내용을 전혀 갖추지 못했다고 판단함.</p>
+                <p class="score-detail">1번 평가: 30점 / 2번 평가: 25점 — 부분 점수 부여가 무의미한 수준</p>
+            </div>
+        </div>
+
+        <!-- 1번 평가 -->
+        <h2 class="section-title">📝 1번 평가</h2>
+        <div class="evaluation-card">
+            <span class="eval-number">EVALUATION 1</span>
+            <div class="eval-header">
+                <span class="eval-grade">F</span>
+                <span class="eval-score">(30점)</span>
+                <span class="eval-label">낙제</span>
+            </div>
+
+            <div class="rationale-box">
+                <strong>근거:</strong> 필수 작성 분량(A4 1페이지 이상) 미달로 추정되며, 감상문의 기본 구조와 형식을 전혀 갖추지 못했음. 비속어와 은어로 점철된 문장은 의사소통의 기본조차 위협하며, 텍스트 분석이나 주제 의식에 대한 진지한 성찰은 전무함.
+            </div>
+
+            <!-- 피드백 항목 1 -->
+            <div class="feedback-item">
+                <div class="fb-title"><span class="icon">🔴</span> 1. 구조의 체계성 – "이것은 감상문의 형태가 아니다."</div>
+                <div class="fb-content">
+                    <p>이 글은 <strong>서론-본론-결론의 3단 구조가 완전히 붕괴</strong>되어 있음. '감상문'이 아니라 단순히 1화부터 12화까지 본 이야기를 욕설과 함께 주절거린 '실시간 채팅 로그'에 가까움.</p>
+                    <ul>
+                        <li><strong>서론 부재:</strong> 작품을 선택한 이유, 첫인상, 기대감 등 독자의 흥미를 끌고 글의 방향을 제시하는 서론이 전혀 없음.</li>
+                        <li><strong>본론의 실종:</strong> 단순한 줄거리 나열과 'ㅋㅋ', '좆노잼', '어이없음' 같은 반응만 있을 뿐, 감상문의 핵심인 '분석'과 '해석'이 없음.</li>
+                        <li><strong>결론의 미달:</strong> "초반엔 볼만했는데 후반엔 지루하고 별로였다"는 단일한 인상을 반복할 뿐, 주장을 뒷받침할 근거가 없음.</li>
+                    </ul>
+                    <div class="advice-box">
+                        <div class="advice-label">💡 조언</div>
+                        <p>"나는 이 작품의 (특정 측면, 예를 들면 '주인공 오버파워 서사의 허무함')에 주목하여 감상문을 쓸 것이다."라고 선언하고, 그 약속을 지키며 본론을 전개하고, 결론에서 그에 대한 최종 판단을 내리는 연습을 할 것.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 피드백 항목 2 -->
+            <div class="feedback-item">
+                <div class="fb-title"><span class="icon">🔴</span> 2. 감상의 깊이와 개인적 해석 – "비속어는 감정이 아니다."</div>
+                <div class="fb-content">
+                    <p>작품에 대한 강한 감정을 느낀 것은 분명히 드러나지만, 그 감정을 표현하는 방식이 <strong>지나치게 미성숙하고 퇴행적</strong>임.</p>
+                    <ul>
+                        <li><strong>비속어와 은어의 범람:</strong> "ㅅㅂ", "지랄하는 것도", "좆노잼", "좆됨", "싸대기 마렵놐ㅋㅋ" 등은 대학 과제에서 즉시 신뢰도를 0으로 만듦.</li>
+                        <li><strong>피상적인 반응의 반복:</strong> "주인공이 또 착한 척 살려줌 ㅋㅋ 어이가 없네 나같으면 걍 무시 깔건데" 같은 문장은 감상이 아니라 불평에 불과함.</li>
+                        <li><strong>자기 경험과의 연결 실패:</strong> 8화에서 개인적 경험을 연결한 유일한 시도조차도 단순한 감정적 혐오 표출에 그침.</li>
+                    </ul>
+                    <div class="quote-block">
+                        "주인공이 밀입국자를 살려주는 행위는 이전에 보여준 합리적인 약사의 태도와 모순되며, 이는 작품의 긴장감을 인위적으로 조성하기 위한 작위적인 설정으로밖에 보이지 않는다" — 이렇게 써야 함.
+                    </div>
+                    <div class="advice-box">
+                        <div class="advice-label">💡 조언</div>
+                        <p>"어이없다", "노잼"이라는 단어를 금지어로 생각하고 글을 다시 쓸 것. 느낀 감정을 유발한 장면의 구체적인 연출(대사, 화면 구성, 음악, 캐릭터의 표정 등)을 묘사하고 분석해야 함.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 피드백 항목 3 -->
+            <div class="feedback-item">
+                <div class="fb-title"><span class="icon">🔴</span> 3. 표현력과 문장 완성도 – "의사소통 자체가 불가능한 수준이다."</div>
+                <div class="fb-content">
+                    <p>이 항목이 가장 심각함. 네 글은 문어체로서의 <strong>기본적인 규칙을 대부분 위반</strong>하고 있음.</p>
+                    <ul>
+                        <li><strong>구어체와 비문의 연속:</strong> "근데", "걍", "띠용?", "~노", "~했음" 같은 종결어미는 글을 완전히 무너뜨림.</li>
+                        <li><strong>가독성을 해치는 표기:</strong> 'ㅋㅋㅋ'와 같은 과도한 의성어 사용, 문장 부호의 부재 또는 오남용, 띄어쓰기 오류.</li>
+                        <li><strong>비문 예시:</strong> "그 후에 흑사병 해결했다하면서 해피엔딩 시키는데 하...아니 이거 맞아? 맞냐곸ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ" → 감정의 배설일 뿐, 의미를 가진 문장이 아님.</li>
+                    </ul>
+                    <div class="advice-box">
+                        <div class="advice-label">💡 조언</div>
+                        <p>글을 다 쓰고 나서 반드시 <strong>소리 내어 읽어보는 과정</strong>을 거칠 것. 귀로 들었을 때 어색하고 이해가 안 되는 문장은 모두 고쳐야 할 문장임. 구어체 표현과 비속어는 100% 제거하고, 정확한 어휘와 완전한 문장으로 대체할 것.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 종합 소견 -->
+            <div class="final-verdict">
+                <h4>📌 1번 평가 종합 소견</h4>
+                <p>이 글의 가장 큰 문제는 감상의 내용보다 <strong>태도</strong>에 있음. "이렇게 써도 누군가는 내 감정을 알아주겠지" 하는 안이함, 혹은 글쓰기의 기본 형식을 배제한 채 감정을 원초적으로 분출하는 것이 '솔직함'이라고 착각하는 태도임. 네가 만약 이 작품의 서사 구조와 캐릭터 설정의 허술함을 제대로 비판하고 싶었다면, 지금처럼 욕설과 조롱으로 점철된 글을 써서는 안 됐음. 이 피드백을 밑거름 삼아, 처음부터 완전히 새로 쓰는 각오로 다시 글에 임하기를 강력히 권고함.</p>
+            </div>
+        </div>
+
+        <!-- 2번 평가 -->
+        <h2 class="section-title">📝 2번 평가</h2>
+        <div class="evaluation-card">
+            <span class="eval-number">EVALUATION 2</span>
+            <div class="eval-header">
+                <span class="eval-grade">F</span>
+                <span class="eval-score">(25/100)</span>
+                <span class="eval-label">매우 낮은 낙제</span>
+            </div>
+
+            <div class="rationale-box">
+                <strong>근거:</strong> F 구간(59점 이하) 중에서도 매우 낮은 점수. 감상문이 아니라 익명 온라인 게시판의 '시청 후기' 혹은 '악플'에 가까운 수준.
+            </div>
+
+            <!-- 문제점 분석 -->
+            <div class="feedback-item">
+                <div class="fb-title"><span class="icon">🔴</span> 1. 감상문의 형식 완전 붕괴 (구조 0점)</div>
+                <div class="fb-content">
+                    <ul>
+                        <li><strong>서론·본론·결론 부재:</strong> 글은 단순히 1화부터 12화까지 줄거리를 나열한 후, 마지막에 짧은 소감을 덧붙였을 뿐임.</li>
+                        <li><strong>단락 구분 무의미:</strong> 단락이 'n화' 단위로 나뉘어 있을 뿐, 하나의 단락 안에서도 수많은 생각이 두서없이 나열되어 논리의 흐름이 전혀 없음.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="feedback-item">
+                <div class="fb-title"><span class="icon">🔴</span> 2. 내용의 부실: '감상'이 아닌 '감정 배설' (충실성 부족)</div>
+                <div class="fb-content">
+                    <ul>
+                        <li><strong>줄거리 요약 + 욕설:</strong> 대부분의 문장이 "웃기다", "어이없다", "지랄", "좆노잼" 같은 부정적 감탄사로 끝남. <strong>왜</strong> 그런지에 대한 논리적 설명이나 분석이 단 한 번도 시도되지 않음.</li>
+                        <li><strong>인물·주제 해석 부재:</strong> 주인공의 성장, 빌런의 동기, '이세계 약국'이라는 소재의 의미 등에 대한 진지한 고민이 전혀 없음.</li>
+                        <li><strong>일관성 결여:</strong> "빌런이 너무 약하다"고 하면서도, 후반부에 "악령 개쌔네"라고 말하는 등 기준이 뒤죽박죽임.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="feedback-item">
+                <div class="fb-title"><span class="icon">🔴</span> 3. 표현과 문장의 심각한 미숙 (언어 사용의 문제)</div>
+                <div class="fb-content">
+                    <ul>
+                        <li><strong>비속어·은어·통신어 남용:</strong> 'ㅅㅂ', '지랄', '샛기', 'ㅋㅋ', '좆', '존나', '따까리' 등이 글 전체를 오염시킴. 공식 과제에서 <strong>즉시 낙제 사유</strong>가 될 수 있음.</li>
+                        <li><strong>맞춤법·띄어쓰기 전멸:</strong> "이세카이", "주인겅", "오케이" 같은 오기, 띄어쓰기 오류("전계노", "마법선생", "같음")가 너무 많음.</li>
+                        <li><strong>문장 성립 불가:</strong> "아니 갑자기 죽었더니 이세카이로 간다? 이건 뭐 ㅅㅂ이해가 안되긴 해" 같은 문장은 구어체 채팅을 글로 옮긴 것에 불과함.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="feedback-item">
+                <div class="fb-title"><span class="icon">🔴</span> 4. 독자에 대한 배려 부재 (전달력 0점)</div>
+                <div class="fb-content">
+                    <ul>
+                        <li>이 글은 이 애니메이션을 보지 않은 사람에게 <strong>어떤 정보도 전달하지 못함.</strong></li>
+                        <li>'따까리', '1호 할배', '트롤하다' 등 명확한 지칭 없이 쓰인 표현은 읽는 이를 극도로 혼란스럽게 함.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="feedback-item">
+                <div class="fb-title"><span class="icon">🔴</span> 5. 분량의 함정</div>
+                <div class="fb-content">
+                    <p>공백 포함 글자 수는 A4 1페이지를 넘길 수 있으나, <strong>내용이 없는 감정적 군소리와 비속어로 채워진 분량은 유효한 분량으로 인정하기 어려움.</strong> "ㅋㅋㅋㅋ..."만 수십 자에 달하는 부분이 이를 증명함.</p>
+                </div>
+            </div>
+
+            <!-- 조언 -->
+            <div class="advice-box">
+                <div class="advice-label">💡 어떻게 고쳐야 할까? — 냉철한 조언</div>
+                <p>
+                    1. <strong>기본기부터 다져야 함:</strong> 서론-본론-결론의 3단 구조를 반드시 지킬 것. 줄거리 요약은 전체의 20%를 넘기지 말고, 나머지 80%는 '너의 생각과 해석'으로 채울 것.<br>
+                    2. <strong>표준어로 생각하고 표준어로 쓸 것:</strong> 비속어, 은어, 통신어는 절대 사용 금지. "어이없다" 대신 "개연성이 부족하다고 느꼈다"와 같은 분석적인 언어로 바꿀 것.<br>
+                    3. <strong>감정에 '이유'를 붙이는 연습:</strong> "6화부터 지루해졌다" → 왜? "주인공이 모든 문제를 쉽게 해결하는 반복 구조 때문에 긴장감이 사라졌기 때문이다." 이렇게 구체적으로 서술해야 함.<br>
+                    4. <strong>'읽는 사람'을 상상할 것:</strong> 이 글을 교수님이 읽는다고 생각하고, 핵심 전개를 모르는 사람도 이해할 수 있도록 인물 관계나 설정을 친절하게 설명할 것.
+                </p>
+            </div>
+
+            <div class="final-verdict">
+                <h4>📌 2번 평가 요약</h4>
+                <p>이 글은 <strong>대학생의 학술적 과제물이 아니라, 익명성이 보장된 인터넷 커뮤니티의 부정적 감정 배설물에 가까움.</strong> 감상문의 형식을 전혀 갖추지 못했고, 언어 사용 수준에서 이미 대학 작문으로서의 최소 기준을 통과하지 못했음. 만약 이 학생이 정말로 성장하고 싶다면, 위에서 제시한 조언을 바탕으로 <strong>이 글을 완전히 폐기하고, 처음부터 다시 쓰는 수밖에 없음.</strong></p>
+            </div>
+        </div>
+
+        <!-- 비교 분석 테이블 -->
+        <h2 class="section-title">📊 두 평가의 공통된 문제점 비교</h2>
+        <div class="evaluation-card" style="padding: 24px 20px;">
+            <table class="compare-table">
+                <thead>
+                    <tr>
+                        <th>평가 영역</th>
+                        <th>1번 평가 진단</th>
+                        <th>2번 평가 진단</th>
+                        <th>공통 결론</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="highlight-row">
+                        <td><strong>구조</strong></td>
+                        <td>서론-본론-결론 완전 붕괴</td>
+                        <td>감상문 형식 완전 붕괴 (0점)</td>
+                        <td>3단 구조 전무</td>
+                    </tr>
+                    <tr>
+                        <td><strong>내용</strong></td>
+                        <td>줄거리 나열 + 감정적 반응</td>
+                        <td>'감상' 아닌 '감정 배설'</td>
+                        <td>분석·해석 부재</td>
+                    </tr>
+                    <tr class="highlight-row">
+                        <td><strong>언어</strong></td>
+                        <td>비속어·은어·구어체 범람</td>
+                        <td>비속어·통신어 남용, 맞춤법 전멸</td>
+                        <td>대학 글쓰기 부적격</td>
+                    </tr>
+                    <tr>
+                        <td><strong>독자 배려</strong></td>
+                        <td>의사소통 불가능 수준</td>
+                        <td>전달력 0점</td>
+                        <td>독자 배려 전무</td>
+                    </tr>
+                    <tr class="highlight-row">
+                        <td><strong>최종 판정</strong></td>
+                        <td>F (30점)</td>
+                        <td>F (25/100)</td>
+                        <td><strong>전면 재작성 필요</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- 최종 결론 -->
+        <h2 class="section-title">⚖️ 최종 결론 및 권고</h2>
+        <div class="evaluation-card" style="border: 2px solid var(--accent-red); box-shadow: 0 0 40px var(--accent-red-glow);">
+            <div class="final-verdict" style="margin-top: 0; border: none; background: transparent;">
+                <h4 style="font-size: 1.2rem;">🚨 해당 과제물은 수정이 아닌 백지 상태에서의 재작성이 요구되는 상태다.</h4>
+                <p>
+                    두 평가 모두 일치된 결론을 내리고 있음:<br><br>
+                    <strong>1.</strong> 이 글은 감상문의 형식과 내용을 전혀 갖추지 못했으며, 대학 과제로 제출할 수 있는 최소한의 문턱을 넘지 못했음.<br>
+                    <strong>2.</strong> 비속어와 은어로 점철된 언어 사용은 학업 태도 자체에 대한 근본적인 의문을 갖게 함.<br>
+                    <strong>3.</strong> 현재 제출된 결과물로는 학점을 부여할 수 없음을 냉정하게 직시해야 함.<br><br>
+                    <strong>앞으로의 학습 방향:</strong> 기본 문장 훈련, 요약과 분석의 분리, '왜'라는 질문 습관화, 존중하는 언어 태도 — 이 네 가지를 바탕으로 학업 태도 자체를 근본적으로 쇄신하길 강력히 권고함.
+                </p>
+            </div>
+        </div>
+
+        <!-- 푸터 -->
+        <footer class="report-footer">
+            <p>📋 감상문 평가 리포트 — 문학적·구성적 측면 | 「이 세계 약국」 감상문 피드백 종합</p>
+            <p style="margin-top: 4px;">이 리포트는 교육적 목적으로 작성되었으며, 학생의 성장을 위한 냉철한 피드백을 담고 있습니다.</p>
+        </footer>
+
+    </div>
+
+</body>
+</html>
